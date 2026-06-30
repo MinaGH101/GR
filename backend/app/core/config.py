@@ -1,17 +1,22 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    APP_NAME: str = "GeoRAG"
-    DEBUG: bool = True
+    app_name: str = "Geo RAG API"
+    environment: str = "development"
 
-    QDRANT_HOST: str = "qdrant"
-    QDRANT_PORT: int = 6333
+    qdrant_url: str = "http://qdrant:6333"
+    qdrant_collection: str = "geo_rag_documents"
 
-    OLLAMA_HOST: str = "http://host.docker.internal:11434"
+    ollama_base_url: str = "http://host.docker.internal:11434"
+    embedding_model: str = "nomic-embed-text"
+    llm_model: str = "qwen3:8b"
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
 
 settings = Settings()
